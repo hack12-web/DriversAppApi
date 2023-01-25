@@ -2,7 +2,7 @@ using DriversAppApi.Models;
 using DriversAppApi.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DriversAppApi.Controller
+namespace DriversAppApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
