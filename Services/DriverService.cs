@@ -7,13 +7,11 @@ namespace DriversAppApi.Services
     public class DriverService
     {
         private readonly IMongoCollection<Driver> _driverCollection;
-        private readonly IMongoCollection<Messenger> _messengerCollection;
         public DriverService(IOptions<DatabaseSettings> databaseSettings)
         {
             var mongoClient = new MongoClient(databaseSettings.Value.ConnectionString);
             var mongoDb = mongoClient.GetDatabase(databaseSettings.Value.DatabaseName);
-            _driverCollection = mongoDb.GetCollection<Driver>(databaseSettings.Value.CollectionName);
-            _messengerCollection = mongoDb.GetCollection<Messenger>(databaseSettings.Value.CollectionName);
+            _driverCollection = mongoDb.GetCollection<Driver>(databaseSettings.Value.CollectionNameDriver);
         }
         
         //Drivers
@@ -22,8 +20,5 @@ namespace DriversAppApi.Services
         public async Task CreateAsync(Driver driver) => await _driverCollection.InsertOneAsync(driver);
         public async Task UpdateAsync(Driver driver) => await _driverCollection.ReplaceOneAsync(x => x.Id == driver.Id, driver);
         public async Task DeleteAsync(string id) => await _driverCollection.DeleteOneAsync(x => x.Id == id);
-
-        //Messengers
-        public async Task<List<Messenger>> GetMessenger() => await _messengerCollection.Find(_ => true).ToListAsync();
     }
 }
