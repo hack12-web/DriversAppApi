@@ -13,14 +13,6 @@ namespace DriversAppApi.Controllers
         {
             _driverService = driverService;
         }
-        [HttpGet("{id:length(24)}")]
-        public async Task<IActionResult> Get(string id)
-        {
-            var existingDriver = await _driverService.GetAsync(id);
-            if(existingDriver is null)
-                return NotFound();
-            return Ok(existingDriver);
-        }
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -28,6 +20,14 @@ namespace DriversAppApi.Controllers
             if(allDrivers.Any())
                 return Ok(allDrivers);
             return NotFound();
+        }
+        [HttpGet("{id:length(24)}")]
+        public async Task<IActionResult> Get(string id)
+        {
+            var existingDriver = await _driverService.GetAsync(id);
+            if(existingDriver is null)
+                return NotFound();
+            return Ok(existingDriver);
         }
         [HttpPost]
         public async Task<IActionResult> CreateDriver(Driver driver)
